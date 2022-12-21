@@ -9,16 +9,25 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-
-        errors = []
-
-        def catch(node, left, right):
-            print(":")
-            if node:
-                if not(node.val > left and node.val < right):
-                    errors.append(node.val)
-                return catch(node.left,left, node.val) and  catch(node.right, node.val, right)
+        
+        # create a list to hold the nodes
+        temp_list =[]
+        
+        
+        # append the nodes to the temp list 
+        def map(node):
+            if not node:return
+            map(node.left)
+            temp_list.append(node)
+            map(node.right)
+        
+        
+        map(root)
+        
+        ## sort the nodes by value
+        sorted_list = sorted(n.val for n in temp_list)
 
         
-
-        catch(root, float("-inf"), float("inf"))
+        # replace the sorted values with original array
+        for i in range(len(sorted_list)):
+            temp_list[i].val = sorted_list[i]
